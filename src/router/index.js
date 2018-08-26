@@ -11,10 +11,10 @@ import UserConsoleHeader from '../components/userConsole/UserConsoleHeader'
 // import ReadPerson from '../components/userConsole/People/ReadPerson'
 // import UpdatePerson from '../components/userConsole/People/UpdatePerson'
 
-import UserDashboard from '../components/userConsole/dashboard/UserDashboard'
-import MyOpportunitiesPage from '../components/userConsole/volunteerOpportunities/MyOpportunitiesPage'
-import ProfilePage from '../components/userConsole/profile/ProfilePage'
-import NotificationsPage from '../components/userConsole/notifications/NotificationsPage'
+// import UserDashboard from '../components/userConsole/dashboard/UserDashboard'
+// import MyOpportunitiesPage from '../components/userConsole/volunteerOpportunities/MyOpportunitiesPage'
+// import ProfilePage from '../components/userConsole/profile/ProfilePage'
+// import NotificationsPage from '../components/userConsole/notifications/NotificationsPage'
 import Poker from '../components/userConsole/poker/Poker'
 
 import AdminHeader from '../components/admin/AdminHeader'
@@ -78,36 +78,36 @@ const router = new Router({
           meta: {
             requiresAuth: true
           }
-        },
-        {
-          path: '/feed',
-          component: UserDashboard,
-          meta: {
-            requiresAuth: true
-          }
-        },
-        {
-          path: '/myopportunities',
-          component: MyOpportunitiesPage,
-          meta: {
-            requiresAuth: true
-          }
-        },
-        {
-          path: '/notifications',
-          component: NotificationsPage,
-          meta: {
-            requiresAuth: true
-          }
-        },
-        //  ------------------------------------------ User Pages ----------------------------------
-        {
-          path: '/profile',
-          component: ProfilePage,
-          meta: {
-            requiresAuth: true
-          }
         }
+        // {
+        //   path: '/feed',
+        //   component: UserDashboard,
+        //   meta: {
+        //     requiresAuth: true
+        //   }
+        // },
+        // {
+        //   path: '/myopportunities',
+        //   component: MyOpportunitiesPage,
+        //   meta: {
+        //     requiresAuth: true
+        //   }
+        // },
+        // {
+        //   path: '/notifications',
+        //   component: NotificationsPage,
+        //   meta: {
+        //     requiresAuth: true
+        //   }
+        // },
+        //  ------------------------------------------ User Pages ----------------------------------
+        // {
+        //   path: '/profile',
+        //   component: ProfilePage,
+        //   meta: {
+        //     requiresAuth: true
+        //   }
+        // }
         // {
         //   path: '/person/:id',
         //   component: ReadPerson,

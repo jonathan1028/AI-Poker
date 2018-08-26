@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class='box'>Home Page</h1>
+    <h1 class='box'>Welcome to AI Poker</h1>
     <!-- <h4 v-if="authenticated">
         You are logged in!
     </h4>

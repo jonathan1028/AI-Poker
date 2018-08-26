@@ -1,6 +1,6 @@
 <template>
   <div class="_box loginContainer">
-    <div class="companyName">Good Citizen Network</div>
+    <div class="companyName">AI Poker</div>
     <div class="inputs">
       <div class="field">
         <label for="">Username</label>

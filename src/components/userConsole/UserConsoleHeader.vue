@@ -4,10 +4,10 @@
       <div class="header-content">
           <div class="main-nav">
             <!-- Logo -->
-            <div class="logo">GCN</div>
+            <div class="logo">AI Poker</div>
             <div class="nav-buttons">
               <router-link to="/poker">Poker</router-link>
-              <div>|</div>
+              <!-- <div>|</div>
               <router-link to="/feed">Feed</router-link>
               <div>|</div>
               <router-link to="/notifications">Notifications</router-link>
@@ -16,7 +16,7 @@
               <div>|</div>
               <router-link to="/myopportunities">My Opportunities</router-link>
               <div>|</div>
-              <router-link to="/admin">Admin</router-link>
+              <router-link to="/admin">Admin</router-link> -->
               <!-- Logged in navigation -->
               <!-- <div class="authenticated-nav" v-if="userId">
                 <router-link to="/people">People</router-link>

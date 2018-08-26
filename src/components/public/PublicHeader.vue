@@ -3,7 +3,7 @@
     <div class="header-content">
         <div class="main-nav">
           <!-- Logo -->
-          <div class="logo">GCN</div>
+          <div class="logo">AI Poker</div>
           <!-- Main navigation -->
           <div class="nav-buttons">
             <!-- <router-link to="/admin">About</router-link>
