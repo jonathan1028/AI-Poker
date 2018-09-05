@@ -54,7 +54,7 @@ const mutations = {
     // localStorage.setItem('auth0UserId', state.auth0UserId)
     // console.log('auth0UserId', localStorage.getItem('auth0UserId'))
     // // Checks to see if the auth0 user has been created in the GraphCool db yet
-    router.push({ path: 'feed' })
+    router.push({ path: 'poker' })
   },
 
   userId (state, userId) {

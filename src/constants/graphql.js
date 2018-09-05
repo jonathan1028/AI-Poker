@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-// ----------------------------------------- Queries ---------------------------------------------
+// ----------------------------------------- Users ---------------------------------------------
 export const ALL_USERS_QUERY = gql`
   query AllUsersQuery {
     allUsers {
@@ -59,6 +59,8 @@ export const USERS_ON_FEED_QUERY = gql`
   }
 `
 
+// ----------------------------------------- Cards ---------------------------------------------
+
 export const ALL_CARDS_QUERY = gql`
   query AllCardsQuery ($code: String){
     allCards (filter: {code: $code}) {
@@ -70,9 +72,44 @@ export const ALL_CARDS_QUERY = gql`
   }
 `
 
+export const GET_CARD_QUERY = gql`
+  query Card ($code: String){
+    Card(code: $code) {
+      id
+      number
+      suit
+      code
+      held
+    }
+  }
+`
+
+// ----------------------------------------- Hands ---------------------------------------------
+
 export const ALL_HANDS_QUERY = gql`
   query AllHandsQuery {
     allHands {
+      id
+      rank
+      preflopOdds
+      code
+      temp
+      cards {
+        code
+      }
+    }
+  }
+`
+
+export const CREATE_HAND_MUTATION = gql`
+  mutation CreateHandMutation($rank: Int, $preflopOdds: Float, $code: String, $cardsIds: [ID!], $temp: Boolean) {
+    createHand(
+      rank: $rank,
+      preflopOdds: $preflopOdds,
+      code: $code
+      temp: $temp
+      cardsIds: $cardsIds
+    ) {
       id
       rank
       preflopOdds
@@ -84,27 +121,19 @@ export const ALL_HANDS_QUERY = gql`
   }
 `
 
-export const ALL_LINKS_QUERY = gql`
-  query AllLinksQuery($first: Int, $skip: Int, $orderBy: LinkOrderBy) {
-    allLinks(first: $first, skip: $skip, orderBy: $orderBy) {
+export const UPDATE_HAND_MUTATION = gql`
+  mutation UpdateHandMutation($id: ID!, $cardsIds: [ID!]) {
+    updateHand(
+      id: $id,
+      cardsIds: $cardsIds
+    ) {
       id
-      createdAt
-      url
-      description
-      postedBy {
-        id
-        name
+      rank
+      preflopOdds
+      code
+      cards {
+        code
       }
-      votes {
-        id
-        user {
-          id
-        }
-      }
-    }
-    # gives you access to the count of the links
-    _allLinksMeta {
-      count
     }
   }
 `
@@ -119,117 +148,6 @@ export const ALL_NOTIFICATIONS_QUERY = gql`
   }
 `
 
-export const ALL_MEDALLIONS_QUERY = gql`
-  query AllMedallionsQuery {
-    allMedallions {
-      id
-      createdAt
-      message
-      category
-      ownedBy {
-        firstName
-        lastName
-      }
-      issuedBy {
-        firstName
-        lastName
-      }
-    }
-  }
-`
-
-export const ALL_PEOPLE_QUERY = gql`
-  query AllPersonsQuery {
-    allPersons {
-      id
-      createdAt
-      displayName
-      firstName
-      lastName
-      phone1
-      email
-      ownedBy {
-        id
-        name
-      }
-    }
-  }
-`
-export const ALL_OPPORTUNITIES_QUERY = gql`
-  query AllOpportunitiesQuery {
-    allOpportunities {
-      id
-      name
-      description
-      startTime
-      endTime
-      location
-      ownedBy {
-        id
-      }
-      interestedUsers {
-        id
-        firstName
-        lastName
-      }
-      goingUsers {
-        id
-        firstName
-        lastName
-      }
-      attendedUsers {
-        id
-        firstName
-        lastName
-      }
-    }
-  }
-`
-
-export const ALL_VOLUNTEERING_LOGS_QUERY = gql`
-  query AllVolunteeringLogsQuery {
-    allVolunteeringLogs {
-      id
-      title
-      description
-      location
-      startTime
-      endTime
-      ownedBy {
-        id
-        firstName
-        lastName
-      }
-    }
-  }
-`
-
-export const ALL_LINKS_SEARCH_QUERY = gql`
-  query AllLinksSearchQuery($searchText: String!) {
-    allLinks(filter: {
-      OR: [{
-        url_contains: $searchText
-      }, {
-        description_contains: $searchText
-      }]
-    }) {
-      id
-      url
-      description
-      createdAt
-      postedBy {
-        id
-        name
-      }
-      votes {
-        id
-        user {
-          id
-        }
-      }
-    }
-  }
-`
 // ----------------------------------------- Mutations ---------------------------------------------
 
 // Two mutations defined at once!
@@ -275,24 +193,6 @@ export const SIGNIN_USER_MUTATION = gql`
         firstName
         lastName
         email
-      }
-    }
-  }
-`
-export const CREATE_HAND_MUTATION = gql`
-  mutation CreateHandMutation($rank: Int, $preflopOdds: Float, $code: String, $cardsIds: [ID!]) {
-    createHand(
-      rank: $rank,
-      preflopOdds: $preflopOdds,
-      code: $code
-      cardsIds: $cardsIds
-    ) {
-      id
-      rank
-      preflopOdds
-      code
-      cards {
-        code
       }
     }
   }

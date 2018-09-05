@@ -43,12 +43,18 @@ const store = new Vuex.Store({
       interested: false,
       going: false,
       attended: false
+    },
+    currentHand: {
+      cards: []
     }
   },
 
   getters: {
     searchQuery (state) {
       return state.searchQueryFilters
+    },
+    currentHand (state) {
+      return state.currentHand
     }
   },
 
@@ -91,6 +97,9 @@ const store = new Vuex.Store({
     },
     updateNotificationType (state, data) {
       state.notificationType = data
+    },
+    updateCurrentHand (state, data) {
+      state.currentHand = JSON.parse(JSON.stringify(data))
     }
   },
   actions: {

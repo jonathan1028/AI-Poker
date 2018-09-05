@@ -1,5 +1,5 @@
 # project: cjl45rf677l5i0154ep715aua
-# version: 4
+# version: 11
 
 type File @model {
   contentType: String!
@@ -21,7 +21,6 @@ type Location @model {
   latitude: String
   longitude: String
   name: String
-  organization: Organization @relation(name: "OrganizationAddress")
   state: String
   zipcode: String
 }
@@ -45,32 +44,6 @@ type Notification @model {
   updatedAt: DateTime!
 }
 
-type Opportunity @model {
-  attendedUsers: [User!]! @relation(name: "AttendedOpportunities")
-  createdAt: DateTime!
-  description: String
-  endTime: DateTime
-  goingUsers: [User!]! @relation(name: "GoingOpportunities")
-  id: ID! @isUnique
-  interestedUsers: [User!]! @relation(name: "InterestedOpportunities")
-  location: String
-  name: String
-  ownedBy: User @relation(name: "UserOpportunities")
-  responses: [Response!]! @relation(name: "OpportunityResponses")
-  startTime: DateTime
-  updatedAt: DateTime!
-}
-
-type Organization @model {
-  address: Location @relation(name: "OrganizationAddress")
-  createdAt: DateTime!
-  id: ID! @isUnique
-  name: String
-  personnel: User @relation(name: "OrgsPersonnel")
-  updatedAt: DateTime!
-  url: String
-}
-
 type Person @model {
   createdAt: DateTime!
   displayName: String
@@ -86,48 +59,19 @@ type Person @model {
   updatedAt: DateTime!
 }
 
-type Response @model {
-  createdAt: DateTime!
-  id: ID! @isUnique
-  message: String
-  opportunity: Opportunity @relation(name: "OpportunityResponses")
-  ownedBy: User @relation(name: "UserResponses")
-  type: String
-  updatedAt: DateTime!
-}
-
 type User @model {
-  attendedOpportunities: [Opportunity!]! @relation(name: "AttendedOpportunities")
   birthYear: String
   createdAt: DateTime!
   email: String @isUnique
   firstName: String
-  goingOpportunities: [Opportunity!]! @relation(name: "GoingOpportunities")
   id: ID! @isUnique
-  interestedOpportunities: [Opportunity!]! @relation(name: "InterestedOpportunities")
   lastName: String
   medallions: [Medallion!]! @relation(name: "UserMedallions")
   medallionsIssued: [Medallion!]! @relation(name: "UserIssuedMedallions")
   notifications: [Notification!]! @relation(name: "UserNotifications")
-  opportunities: [Opportunity!]! @relation(name: "UserOpportunities")
-  organizations: [Organization!]! @relation(name: "OrgsPersonnel")
   password: String
   persons: [Person!]! @relation(name: "UsersPersons")
   phone: String
-  responses: [Response!]! @relation(name: "UserResponses")
-  updatedAt: DateTime!
-  volunteeringLogs: [VolunteeringLog!]! @relation(name: "UserVolunteeringLogs")
-}
-
-type VolunteeringLog @model {
-  createdAt: DateTime!
-  description: String
-  endTime: DateTime
-  id: ID! @isUnique
-  location: String
-  ownedBy: User @relation(name: "UserVolunteeringLogs")
-  startTime: DateTime
-  title: String
   updatedAt: DateTime!
 }
 
@@ -138,6 +82,7 @@ type Card @model {
   number: Int
   suit: String
   code: String
+  held: Boolean
   hands: [Hand!]! @relation(name: "CardsinHand")
 }
 
@@ -148,5 +93,6 @@ type Hand @model {
   rank: Int
   preflopOdds: Float
   code: String
+  temp: Boolean
   cards: [Card!]! @relation(name: "CardsinHand")
 }

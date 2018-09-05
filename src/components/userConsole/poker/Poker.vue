@@ -12,6 +12,22 @@
       </ul>
     </div>
     <div>
+       <div class="hands">
+        <div>Enter Hand</div>
+        <div>
+          <label for="">Add Card:</label>
+          <input type="text" v-model="card1">
+        </div>
+        <button @click="add()">+</button>
+      </div>
+      <div>Current Hand</div>
+      <div
+        v-for="(card, index) in currentHand.cards"
+        :key="index + '-currentHand'"
+        >
+        <li>{{card.code}}</li>
+      </div>
+      <div>Statistics</div>
       <!-- <div class="hands">
         <div>Create Hand</div>
         <div>
@@ -59,6 +75,7 @@
 
 <script>
 import { ALL_CARDS_QUERY, ALL_HANDS_QUERY, CREATE_HAND_MUTATION } from '../../../constants/graphql'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Poker',
@@ -132,6 +149,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['currentHand']),
     filteredData: function () {
       console.log('Hands', this.allHands)
       let data = this.allHands
@@ -184,6 +202,75 @@ export default {
   methods: {
     open () {
       this.$store.commit('toggleCreateMedallionModal')
+    },
+    add () {
+      console.log('Add Entered')
+      console.log('Current Hand at Start', this.$store.state.currentHand)
+      this.$apollo.query({
+        query: ALL_CARDS_QUERY,
+        variables: {
+          code: this.card1
+        }
+      }).catch((error) => {
+        console.error(error)
+      }).then((result) => {
+        console.log('Card Result', result)
+        let temp = this.$store.state.currentHand
+        temp.cards.push(result.data.allCards[0])
+        this.$store.commit('updateCurrentHand', temp)
+        console.log('Current Hand at End', this.$store.state.currentHand)
+        // if (!this.$store.state.currentHand.id) {
+        //   this.$apollo.mutate({
+        //     mutation: CREATE_HAND_MUTATION,
+        //     variables: {
+        //       temp: true,
+        //       cardsIds: [result.data.allCards[0].id]
+        //     }
+        //   }).catch((error) => {
+        //     console.error(error)
+        //   }).then((result) => {
+        //     this.$store.commit('updateCurrentHand', result.data.createHand)
+        //     console.log('Current Hand', this.$store.state.currentHand)
+        //   })
+        // } else {
+        //   let cardsIds = this.$store.state.currentHand.cards
+        //   console.log('Cards', this.$store.state.currentHand.cards)
+        //   cardsIds.push(result.data.allCards[0].id)
+        //   this.$apollo.mutate({
+        //     mutation: UPDATE_HAND_MUTATION,
+        //     variables: {
+        //       id: this.$store.state.currentHand.id,
+        //       cardsIds: cardsIds
+        //     }
+        //   }).catch((error) => {
+        //     console.error(error)
+        //   }).then((result) => {
+        //     this.$store.commit('updateCurrentHand', result.data.updateHand)
+        //     console.log('Updated Hand', this.$store.state.currentHand)
+        //   })
+        // }
+
+        // this.$apollo.mutate({
+        //   mutation: CREATE_HAND_MUTATION,
+        //   variables: {
+        //     // Sets variables in graphql.js
+        //     rank: rank,
+        //     preflopOdds: preflopOdds,
+        //     code: code,
+        //     cardsIds: [card1Data.data.allCards[0].id, card2Data.data.allCards[0].id]
+        //   },
+        //   update: (store, { data: { createHand } }) => {
+        //     // Pull data from the stored query
+        //     const data = store.readQuery({ query: ALL_HANDS_QUERY })
+        //     // We add the new data
+        //     data.allHands.push(createHand)
+        //     // We update the cache
+        //     store.writeQuery({ query: ALL_HANDS_QUERY, data: data })
+        //   }
+        // }).catch((error) => {
+        //   console.error(error)
+        // })
+      })
     },
     submit () {
       console.log('Submit', this.rank, this.preflopOdds, this.code)
